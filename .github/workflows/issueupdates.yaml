@@ -1,0 +1,33 @@
+name: Issue Handler
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  tag-and-assign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Tag and Assign Issue
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const issue_number = context.issue.number;
+          const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+
+          await octokit.issues.addLabels({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            labels: ['WOW!']
+          });
+
+
+          await octokit.issues.addAssignees({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            issue_number: issue_number,
+            assignees: ['ancharbo']
+          });
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
