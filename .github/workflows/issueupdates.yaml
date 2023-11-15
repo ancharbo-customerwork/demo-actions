@@ -13,17 +13,15 @@ jobs:
       with:
         script: |
           const issue_number = context.issue.number;
-          const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
 
-          await octokit.issues.addLabels({
+          await github.rest.issues.addLabels({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: issue_number,
             labels: ['WOW!']
           });
 
-
-          await octokit.issues.addAssignees({
+          await github.rest.issues.addAssignees({
             owner: context.repo.owner,
             repo: context.repo.repo,
             issue_number: issue_number,
