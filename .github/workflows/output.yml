@@ -9,7 +9,10 @@ jobs:
       output1: ${{ steps.step1.outputs.random-id }}
     steps:
       - id: step1
-        run: echo "::set-output name=random-id::$(echo $RANDOM)"
+        run: |
+          RANDOM_ID=$(echo $RANDOM)
+          echo "::set-output name=random-id::$RANDOM_ID"
+          echo "The random number is $RANDOM_ID"
 
   job2:
     needs: job1
