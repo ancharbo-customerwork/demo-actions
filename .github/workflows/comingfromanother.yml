@@ -1,6 +1,0 @@
-name: calling another repo
-
-on: workflow_dispatch
-jobs:
-  from-another:
-    uses: ancharbo-customerwork/easyaction/.github/workflows/easy.yml@main
