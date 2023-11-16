@@ -1,0 +1,19 @@
+name: Pass output between actions
+
+on: workflow_dispatch
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.step1.outputs.random-id }}
+    steps:
+      - id: step1
+        run: echo "::set-output name=random-id::$(echo $RANDOM)"
+
+  job2:
+    needs: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get output from job1
+        run: echo "The output from job1 is ${{ needs.job1.outputs.output1 }}"
